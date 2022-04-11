@@ -1,5 +1,13 @@
+import random
+from Tri_Rapide import *
+
 def main():
-    print('The main function')
+    tailleList = 10
+    valMax = 20
+    liste = [random.randrange(1, valMax) for _ in range(tailleList)]
+    print("liste initiale = ",liste)
+    listeTriée = quicksort(liste)
+    print("liste triée = ", listeTriée)
 
 
 if __name__ == '__main__':
