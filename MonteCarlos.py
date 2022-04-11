@@ -1,6 +1,7 @@
 import random as r
 import numpy as np
 import matplotlib.pyplot as plt
+from sympy import symbols, integrate
 
 def monteCarlosPi():
     # limits of integration
@@ -20,9 +21,6 @@ def monteCarlosPi():
 
     pi = (c/N)*4
     print("pi est environ ", pi)
-    # for i in range(len(ar)):
-    #     ar[i] = random.uniform(a, b)
-
     # dx = 0.005
     # x  = np.arange(-10, 10, dx)
     # y  = 0.25*np.exp((-x ** 2)/8)
@@ -35,5 +33,4 @@ def monteCarlosPi():
     # plt.title("Monte Carlos")
     # plt.legend()
     # plt.show()
-
 
