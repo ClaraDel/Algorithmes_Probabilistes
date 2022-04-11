@@ -8,7 +8,7 @@ import matplotlib.path as mplPath
 # limits of integration
 a = 0
 b = 100  #borne de la figure
-N = 1000 #nbr de points à placer de manière random
+N = 5000 #nbr de points à placer de manière random
 
 def defineShape():
     path_data = [
@@ -52,7 +52,7 @@ def displayFigure(path, points, N):
     ax.set_ylim(0, 100)
 
     for i in range(N) :
-        ax.scatter(points[i][0], points[i][1])
+        ax.scatter(points[i][0], points[i][1], s = 2 + 1000/N)
 
     plt.show()
 
@@ -60,14 +60,7 @@ def displayFigure(path, points, N):
 path = defineShape()
 [points, airAera] = monteCarlos(a, b, N, path)
 print("pour N =", N, ", la figure a une aire de", airAera)
-displayFigure(path, points, N)
+#displayFigure(path, points, N)
 
 
-# Steps
-# Create a list of points to make the polygon.
-#
-# Create a new path with the given vertices and codes, using mplPath.Path().
-#
-# Check if point (200, 100) exists in the polygon or not, using contains_point() method. Return whether the (closed) path contains the given point. => True
-#
-# Check if point (1200, 1000) exists in the polygon or not, using contains_point() method. Return whether the (closed) path contains the given point. => False
+#the current algorithm has some limitations: The result is undefined for points exactly at the boundary (i.e. at the path shifted by radius/2).
