@@ -8,30 +8,26 @@ import matplotlib.path as mplPath
 # limits of integration
 a = 0
 b = 100  #borne de la figure
-N = 500 #nbr de points à placer de manière random
+N = 1000 #nbr de points à placer de manière random
 
 def defineShape():
-    depart = (r.uniform(17, 30), r.uniform(10, 35))
-    pt1 = (r.uniform(0, 20), r.uniform(depart[1], 70))
-    pt2 = (r.uniform(5, 25), r.uniform(pt1[1], 90))
-    pt3 = (r.uniform(pt2[0], 50), r.uniform(80, 100))
-    pt4 = (r.uniform(40, 60), r.uniform(70, 85))
-    pt5 = (r.uniform(70, 100), r.uniform(0, 15))
+
+    #rectangle
+    depart = (30,30)
+    a = 40
+    b = 50
+    airRec = a*b
     path_data = [
         (mplPath.Path.MOVETO, depart),
-        (mplPath.Path.CURVE3, pt1),
-        (mplPath.Path.CURVE3, pt2),
-        (mplPath.Path.CURVE3, pt3),
-        (mplPath.Path.CURVE3, pt4),
-        (mplPath.Path.CURVE3, (75, 90)),
-        (mplPath.Path.CURVE3, (80, 60)),
-        (mplPath.Path.CURVE3, pt5),
-        (mplPath.Path.LINETO, depart)
+        (mplPath.Path.LINETO, (depart[0],depart[1]+a)),
+        (mplPath.Path.LINETO, (depart[0]+b,depart[1]+a)),
+        (mplPath.Path.LINETO, (depart[0] + b, depart[1])),
+        (mplPath.Path.LINETO, (30,30))
     ]
     codes, verts = zip(*path_data)
     path = mplPath.Path(verts, codes)
 
-    return path
+    return path, airRec
 
 def monteCarlos(a, b, N, path):
     c = 0 #nbr de points dans la forme
@@ -43,14 +39,12 @@ def monteCarlos(a, b, N, path):
         if path.contains_point((points[i][0],points[i][1])) :
             c+=1
 
-    print("nbr points in shape =", c, "sur ", N, "points totaux")
-
     airAera = (c/N)*pow((b-a), 2)
 
     return points, airAera
 
 def displayFigure(path, points, N):
-    patch = patches.PathPatch(path, facecolor='b', alpha=0.5)
+    patch = patches.PathPatch(path, facecolor='r', alpha=0.5)
 
     # Affiche le patch et les points que l'on jette
     fig = plt.figure()
@@ -64,11 +58,17 @@ def displayFigure(path, points, N):
 
     plt.show()
 
-print("\nAlgorithme de Monte-Carlo")
-path = defineShape()
-[points, airAera] = monteCarlos(a, b, N, path)
-print("pour N =", N, ", la figure a une aire de", airAera)
-displayFigure(path, points, N)
+print("\nAlgorithme de Monte-Carlo (comparaison avec air exacte)")
+path, airRec = defineShape()
+valeursN = [500, 1000, 100000]
+for N in valeursN:
+    [points, airAera] = monteCarlos(a, b, N, path)
+    print("-----  N =", N, "-----")
+    print("Air avec Monte Carlos :", airAera)
+    print("Air exacte :", airRec)
+    print("Erreur de", abs((airAera-airRec))/airRec*100, "%")
+    if(N==500) :
+        displayFigure(path, points, N)
 
 
 #the current algorithm has some limitations: The result is undefined for points exactly at the boundary (i.e. at the path shifted by radius/2).
