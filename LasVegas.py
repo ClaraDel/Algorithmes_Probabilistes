@@ -17,13 +17,83 @@ def quickSortLV(tab):
                 gTab.append(tab[i])
     return quickSortLV(pTab) + [tab[indice]] + quickSortLV(gTab)
 
-list = []
-taille = 100000
-for i in range(taille):
-    list.append(random.randint(0, 1000))
+def queens():
+    tab = []
+    for i in range(8):
+        tab.append([0])
+        for j in range(7):
+            tab[i].append(0)
 
-for i in range(10):
-    start = time.time()
-    list = quickSortLV(list)
-    temps = time.time() - start
-    print("Temps d'exécution :", temps)
+    for i in range(8):
+        if not queensIter(tab):
+            return False
+
+    return printSolution(tab)
+
+def queensIter(tab):
+
+    a = random.randint(0, 7)
+    o = random.randint(0, 7)
+    while verification(tab, a, o):
+        a = random.randint(0, 7)
+        o = random.randint(0, 7)
+
+    if verifDiag(tab, a, o):
+        gonext = False
+    else:
+        tab[a][o] = 1
+        gonext = True
+    return gonext
+
+def printSolution(tab):
+    solution = ""
+    for i in range(8):
+        for j in range(8):
+            if tab[i][j] == 1:
+                solution = solution + '(' + str(i) + ' ' + str(j) + ')'
+    return solution
+
+def verification(tab, a, o):
+    for i in range(a):
+        if tab[i][o] == 1:
+            return True
+    for i in range(a, 8):
+        if tab[i][o] == 1:
+            return True
+    for i in range(o):
+        if tab[a][i] == 1:
+            return True
+    for i in range(o, 8):
+        if tab[a][i] == 1:
+            return True
+    return False
+
+def verifDiag(tab, a, o):
+    l = a
+    c = o
+    while l != 0 and c != 0:
+        l = l - 1
+        c = c - 1
+        if tab[l][c] == 1:
+            return True
+    l = a
+    c = o
+    while l != 7 and c != 0:
+        l = l + 1
+        c = c - 1
+        if tab[l][c] == 1:
+            return True
+    l = a
+    c = o
+    while l != 0 and c != 7:
+        l = l - 1
+        c = c + 1
+        if tab[l][c] == 1:
+            return True
+    l = a
+    c = o
+    while l != 7 and c != 7:
+        l = l + 1
+        c = c + 1
+        if tab[l][c] == 1:
+            return True

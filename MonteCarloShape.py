@@ -56,7 +56,7 @@ def displayFigure(path, points, N):
 
     plt.show()
 
-
+print("\nAlgorithme de Monte-Carlo")
 path = defineShape()
 [points, airAera] = monteCarlos(a, b, N, path)
 print("pour N =", N, ", la figure a une aire de", airAera)
