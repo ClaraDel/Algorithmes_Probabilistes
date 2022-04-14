@@ -4,8 +4,6 @@ from MonteCarlos import *
 
 def main():
 
-    _list_of_vertices
-    MC(_list_of_vertices, iters, visualise = True, s_type = "rand")
 
 if __name__ == '__main__':
     main()
