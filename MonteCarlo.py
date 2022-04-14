@@ -21,16 +21,5 @@ def monteCarlosPi():
 
     pi = (c/N)*4
     print("pi est environ ", pi)
-    # dx = 0.005
-    # x  = np.arange(-10, 10, dx)
-    # y  = 0.25*np.exp((-x ** 2)/8)
-    #
-    # y=y/ (np.sum(dx * y))
-    #
-    # plt.plot(x,y,label="pdf")
-    # plt.xlabel("X")
-    # plt.ylabel("Probability Values")
-    # plt.title("Monte Carlos")
-    # plt.legend()
-    # plt.show()
 
+monteCarlosPi()
